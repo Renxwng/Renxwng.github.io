@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Sonidos del Alma</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="text-center">Sonidos del Alma - Tienda de Instrumentos Musicales</h1>
+            <nav>
+                <ul>
+                    <li><a href="#cuerdas" class="btn">Cuerdas</a></li>
+                    <li><a href="#viento" class="btn">Viento</a></li>
+                    <li><a href="#percusion" class="btn">Percusión</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Instrumentos de cuerdas -->
+        <section id="cuerdas">
+            <h2>Instrumentos de Cuerdas</h2>
+            <div class="products">
+                <div class="product-card">
+                    <img src="assets/img/guitarra.png" alt="Guitarra Acústica">
+                    <h3>Guitarra Acústica</h3>
+                    <p>La guitarra acústica con cuerdas de nylon Ibanez GA3 tiene todo para satisfacer las necesidades del estudiante.</p>
+                    <p class="price">$250,000</p>
+                    <button class="add-to-cart" onclick="addToCart('Guitarra Acústica', 250000, 'assets/img/guitarra.png')">Agregar al carrito</button>
+                </div>
+                <div class="product-card">
+                    <img src="assets/img/violin.png" alt="Violin Yamaha">
+                    <h3>Violin Yamaha</h3>
+                    <p>El violín V3SKA está fabricado con maderas de la mejor calidad.</p>
+                    <p class="price">$449,900</p>
+                    <button class="add-to-cart" onclick="addToCart('Violin Yamaha', 449900, 'assets/img/violin.png')">Agregar al carrito</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Instrumentos de viento -->
+        <section id="viento">
+            <h2>Instrumentos de Viento</h2>
+            <div class="products">
+                <div class="product-card">
+                    <img src="assets/img/teclado.png" alt="Teclado Casio">
+                    <h3>Teclado Casio</h3>
+                    <p>Presentamos el CT-X700, el teclado perfecto para quienes buscan sumergirse en la música.</p>
+                    <p class="price">$373,190</p>
+                    <button class="add-to-cart" onclick="addToCart('Teclado Casio', 373190, 'assets/img/teclado.png')">Agregar al carrito</button>
+                </div>
+                <div class="product-card">
+                    <img src="assets/img/saxofon.png" alt="Saxofon Tenor">
+                    <h3>Saxofon Tenor</h3>
+                    <p>El saxofón tenor Vosi TS2155 LN de Antigua entrega calidad de sonido y ergonomía.</p>
+                    <p class="price">$1,304,230</p>
+                    <button class="add-to-cart" onclick="addToCart('Saxofon Tenor', 1304230, 'assets/img/saxofon.png')">Agregar al carrito</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Instrumentos de percusión -->
+        <section id="percusion">
+            <h2>Instrumentos de Percusión</h2>
+            <div class="products">
+                <div class="product-card">
+                    <img src="assets/img/bateria.png" alt="Batería Acústica">
+                    <h3>Batería Acústica</h3>
+                    <p>Batería acústica de medidas estándar con fierros y platos.</p>
+                    <p class="price">$841,918</p>
+                    <button class="add-to-cart" onclick="addToCart('Batería Acústica', 841918, 'assets/img/bateria.png')">Agregar al carrito</button>
+                </div>
+                <div class="product-card">
+                    <img src="assets/img/pandereta.png" alt="Pandereta Musical">
+                    <h3>Pandereta Musical</h3>
+                    <p>Sonido agradable con una carcasa interna del tambor que produce un tono nítido.</p>
+                    <p class="price">$6,490</p>
+                    <button class="add-to-cart" onclick="addToCart('Pandereta Musical', 6490, 'assets/img/pandereta.png')">Agregar al carrito</button>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <a href="carrito.html" class="btn">Ver carrito</a>
+        </footer>
+    </div>
+
+    <script>
+        // Función para agregar productos al carrito
+        function addToCart(productName, productPrice, productImage) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || []; // Cargar carrito desde localStorage
+    
+            const product = {
+                name: productName,
+                price: productPrice,
+                image: productImage
+            };
+    
+            cart.push(product); // Agregar el producto al carrito
+            localStorage.setItem('cart', JSON.stringify(cart)); // Guardar el carrito actualizado
+    
+            updateTotal();
+        }
+    
+        // Función para actualizar el total del carrito y mostrarlo con separador de miles
+        function updateTotal() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let total = 0;
+    
+            // Sumar el precio de todos los productos en el carrito
+            cart.forEach(product => {
+                total += product.price;
+            });
+    
+            // Mostrar el total con separador de miles
+            let formattedTotal = total.toLocaleString(); // Formatea el número con separadores de miles
+    
+            // Actualizar el div con el total en formato adecuado
+            document.getElementById('total').textContent = `Total: $${formattedTotal}`;
+        }
+    
+        // Llamar a la función de actualización de total al cargar la página si ya hay productos en el carrito
+        window.onload = updateTotal;
+    </script>
+
+    <div id="total" class="total-price">
+        <!-- El total se actualizará aquí -->
+    </div>
+</body>
+</html>

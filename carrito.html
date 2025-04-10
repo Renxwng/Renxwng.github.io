@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="text-center">Tu Carrito de Compras</h1>
+        </header>
+
+        <div class="cart" id="cartItems">
+            <!-- Los productos del carrito se agregarán aquí dinámicamente -->
+        </div>
+
+        <div class="total">
+            <h3 id="totalAmount">Total: $0.00</h3>
+            <!-- Botón "Ir a pagar" con clase .btn -->
+            <a href="pago.html" class="btn">Ir a pagar</a>
+        </div>
+
+        <footer>
+            <!-- Botón "Volver a la tienda" con clase .btn -->
+            <a href="index.html" class="btn">Volver a la tienda</a>
+        </footer>
+    </div>
+
+    <script>
+        // Función para cargar los productos del carrito desde localStorage
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = document.getElementById('cartItems');
+            let total = 0;
+    
+            cartItemsContainer.innerHTML = ''; // Limpiar el contenedor de productos del carrito
+    
+            cart.forEach((item, index) => {
+                total += item.price;
+    
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                cartItem.innerHTML = `
+                    <div class="item-info">
+                        <h3>${item.name}</h3>
+                        <p class="price">$${item.price.toLocaleString()}</p> <!-- Formato con separador de miles -->
+                    </div>
+                    <!-- Botón para eliminar el producto del carrito -->
+                    <button class="remove-item" onclick="removeFromCart(${index})">Eliminar</button>
+                `;
+    
+                cartItemsContainer.appendChild(cartItem);
+            });
+    
+            // Actualizar el total acumulado con separadores de miles
+            document.getElementById('totalAmount').innerText = `Total: $${total.toLocaleString()}`;
+        }
+    
+        // Función para eliminar un producto del carrito
+        function removeFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1); // Eliminar el producto por su índice
+            localStorage.setItem('cart', JSON.stringify(cart)); // Guardar el carrito actualizado
+            loadCart(); // Volver a cargar el carrito actualizado
+        }
+    
+        // Cargar el carrito al cargar la página
+        loadCart();
+    </script>    
+</body>
+</html>
